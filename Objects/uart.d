@@ -1,0 +1,10 @@
+.\objects\uart.o: lab2_starter_code\uart.c
+.\objects\uart.o: Z:\run\media\anant\79d5101f-a537-4803-98f5-8897ecc8505e\uVisionPackages\Keil\LPC1700_DFP\2.6.0\Device\Include\lpc17xx.h
+.\objects\uart.o: Z:\run\media\anant\79d5101f-a537-4803-98f5-8897ecc8505e\uVisionPackages\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm3.h
+.\objects\uart.o: Z:\run\media\anant\79d5101f-a537-4803-98f5-8897ecc8505e\uVision\ARM\ARMCC\bin\..\include\stdint.h
+.\objects\uart.o: Z:\run\media\anant\79d5101f-a537-4803-98f5-8897ecc8505e\uVisionPackages\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h
+.\objects\uart.o: Z:\run\media\anant\79d5101f-a537-4803-98f5-8897ecc8505e\uVisionPackages\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h
+.\objects\uart.o: Z:\run\media\anant\79d5101f-a537-4803-98f5-8897ecc8505e\uVisionPackages\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h
+.\objects\uart.o: Z:\run\media\anant\79d5101f-a537-4803-98f5-8897ecc8505e\uVisionPackages\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h
+.\objects\uart.o: Z:\run\media\anant\79d5101f-a537-4803-98f5-8897ecc8505e\uVisionPackages\Keil\LPC1700_DFP\2.6.0\Device\Include\system_LPC17xx.h
+.\objects\uart.o: lab2_starter_code\uart.h
