@@ -1,3 +1,22 @@
 int main(void){
-	printf("Hello part 2");
+	while(true){
+		uint16_t dir_pins = (LPC_GPIO1->FIOPINH) >> 7;
+		uint16_t press_pin = ((LPC_GPIO1->FIOPINH) >> 4) & 1; // and with 1 to isolate bit 20
+		
+		// note this treats 1 as on and 0 as off by doing ~dir_pins
+		// & with 0xf to isolate last 4 bits (bits 23-26)
+		switch(~dir_pins & 0xf){
+			case 1:
+				printf("North: "); break;
+			case 1 << 1:
+				printf("East: "); break;
+			case 1 << 2:
+				printf("South: "); break;
+			case 1 << 3:
+				printf("West: "); break;
+			default:
+				printf("Centerd: "); break;
+		}
+		if(press_pin){printf("unpressed\n");}else{printf("pressed\n");}
+	}
 }
