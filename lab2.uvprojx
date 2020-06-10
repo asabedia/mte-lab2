@@ -397,6 +397,36 @@
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
             </File>
+            <File>
+              <FileName>periphutils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\periphutils.c</FilePath>
+            </File>
+            <File>
+              <FileName>periphutils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\periphutils.h</FilePath>
+            </File>
+            <File>
+              <FileName>part2.main</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\part2.main</FilePath>
+            </File>
+            <File>
+              <FileName>part1.main</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\part1.main</FilePath>
+            </File>
+            <File>
+              <FileName>part3.main</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\part3.main</FilePath>
+            </File>
+            <File>
+              <FileName>part4.main</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\part4.main</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
