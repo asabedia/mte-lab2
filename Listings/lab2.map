@@ -40,6 +40,8 @@ Section Cross References
     uart.o(i.getFrequency) refers to system_lpc17xx.o(.data) for SystemCoreClock
     main.o(i.main) refers to periphutils.o(i.IntToBits) for IntToBits
     main.o(i.main) refers to printf5.o(i.__0printf$5) for __2printf
+    periphutils.o(i.set_all_LED) refers to periphutils.o(i.writeLED) for writeLED
+    periphutils.o(i.writeLED) refers to periphutils.o(i.writeToGPIO) for writeToGPIO
     startup_lpc17xx.o(RESET) refers to startup_lpc17xx.o(STACK) for __initial_sp
     startup_lpc17xx.o(RESET) refers to startup_lpc17xx.o(.text) for Reset_Handler
     startup_lpc17xx.o(RESET) refers to uart.o(i.UART0_IRQHandler) for UART0_IRQHandler
@@ -336,6 +338,9 @@ Removing Unused input sections from the image.
     Removing periphutils.o(.rev16_text), (4 bytes).
     Removing periphutils.o(.revsh_text), (4 bytes).
     Removing periphutils.o(.rrx_text), (6 bytes).
+    Removing periphutils.o(i.set_all_LED), (24 bytes).
+    Removing periphutils.o(i.writeLED), (136 bytes).
+    Removing periphutils.o(i.writeToGPIO), (48 bytes).
     Removing startup_lpc17xx.o(HEAP), (8192 bytes).
     Removing system_lpc17xx.o(.rev16_text), (4 bytes).
     Removing system_lpc17xx.o(.revsh_text), (4 bytes).
@@ -348,7 +353,7 @@ Removing Unused input sections from the image.
     Removing cdrcmple.o(.text), (48 bytes).
     Removing depilogue.o(.text), (186 bytes).
 
-31 unused section(s) (total 10246 bytes) removed from the image.
+34 unused section(s) (total 10454 bytes) removed from the image.
 
 ==============================================================================
 
@@ -619,46 +624,46 @@ Memory Map of the image
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x00000000   0x00000000   0x000000cc   Data   RO          275    RESET               startup_lpc17xx.o
-    0x000000cc   0x000000cc   0x00000000   Code   RO          319  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x000000cc   0x000000cc   0x00000004   Code   RO          585    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x000000d0   0x000000d0   0x00000004   Code   RO          588    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x000000d4   0x000000d4   0x00000000   Code   RO          590    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x000000d4   0x000000d4   0x00000000   Code   RO          592    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x000000d4   0x000000d4   0x00000008   Code   RO          593    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x000000dc   0x000000dc   0x00000000   Code   RO          595    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x000000dc   0x000000dc   0x00000000   Code   RO          597    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x000000dc   0x000000dc   0x00000004   Code   RO          586    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
-    0x000000e0   0x000000e0   0x00000024   Code   RO          277  * .text               startup_lpc17xx.o
-    0x00000104   0x00000104   0x00000062   Code   RO          322    .text               mc_w.l(uldiv.o)
-    0x00000166   0x00000166   0x0000001e   Code   RO          601    .text               mc_w.l(llshl.o)
-    0x00000184   0x00000184   0x00000020   Code   RO          603    .text               mc_w.l(llushr.o)
-    0x000001a4   0x000001a4   0x00000024   Code   RO          616    .text               mc_w.l(init.o)
+    0x00000000   0x00000000   0x000000cc   Data   RO          296    RESET               startup_lpc17xx.o
+    0x000000cc   0x000000cc   0x00000000   Code   RO          340  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x000000cc   0x000000cc   0x00000004   Code   RO          606    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x000000d0   0x000000d0   0x00000004   Code   RO          609    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x000000d4   0x000000d4   0x00000000   Code   RO          611    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x000000d4   0x000000d4   0x00000000   Code   RO          613    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x000000d4   0x000000d4   0x00000008   Code   RO          614    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x000000dc   0x000000dc   0x00000000   Code   RO          616    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x000000dc   0x000000dc   0x00000000   Code   RO          618    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x000000dc   0x000000dc   0x00000004   Code   RO          607    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x000000e0   0x000000e0   0x00000024   Code   RO          298  * .text               startup_lpc17xx.o
+    0x00000104   0x00000104   0x00000062   Code   RO          343    .text               mc_w.l(uldiv.o)
+    0x00000166   0x00000166   0x0000001e   Code   RO          622    .text               mc_w.l(llshl.o)
+    0x00000184   0x00000184   0x00000020   Code   RO          624    .text               mc_w.l(llushr.o)
+    0x000001a4   0x000001a4   0x00000024   Code   RO          637    .text               mc_w.l(init.o)
     0x000001c8   0x000001c8   0x00000006   Code   RO           73    i.Free              uart.o
     0x000001ce   0x000001ce   0x00000002   PAD
     0x000001d0   0x000001d0   0x00000024   Code   RO           74    i.FreeRcv           uart.o
     0x000001f4   0x000001f4   0x00000024   Code   RO           75    i.FreeSnd           uart.o
-    0x00000218   0x00000218   0x00000054   Code   RO          248    i.IntToBits         periphutils.o
+    0x00000218   0x00000218   0x00000054   Code   RO          251    i.IntToBits         periphutils.o
     0x0000026c   0x0000026c   0x00000068   Code   RO           79    i.UART0_IRQHandler  uart.o
     0x000002d4   0x000002d4   0x00000024   Code   RO           85    i.UARTSendChar      uart.o
-    0x000002f8   0x000002f8   0x00000002   Code   RO          625    i.__scatterload_null  mc_w.l(handlers.o)
+    0x000002f8   0x000002f8   0x00000002   Code   RO          646    i.__scatterload_null  mc_w.l(handlers.o)
     0x000002fa   0x000002fa   0x00000002   PAD
-    0x000002fc   0x000002fc   0x00000004   Code   RO          276    .ARM.__at_0x02FC    startup_lpc17xx.o
-    0x00000300   0x00000300   0x00000140   Code   RO          287    i.SystemInit        system_lpc17xx.o
+    0x000002fc   0x000002fc   0x00000004   Code   RO          297    .ARM.__at_0x02FC    startup_lpc17xx.o
+    0x00000300   0x00000300   0x00000140   Code   RO          308    i.SystemInit        system_lpc17xx.o
     0x00000440   0x00000440   0x00000070   Code   RO           80    i.UART1_IRQHandler  uart.o
     0x000004b0   0x000004b0   0x000000bc   Code   RO           81    i.UARTInit          uart.o
-    0x0000056c   0x0000056c   0x00000020   Code   RO          457    i.__0printf$5       mc_w.l(printf5.o)
+    0x0000056c   0x0000056c   0x00000020   Code   RO          478    i.__0printf$5       mc_w.l(printf5.o)
     0x0000058c   0x0000058c   0x00000022   Code   RO           86    i.__NVIC_EnableIRQ  uart.o
-    0x000005ae   0x000005ae   0x0000000e   Code   RO          624    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x000005bc   0x000005bc   0x0000000e   Code   RO          626    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x000005ae   0x000005ae   0x0000000e   Code   RO          645    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x000005bc   0x000005bc   0x0000000e   Code   RO          647    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x000005ca   0x000005ca   0x00000002   PAD
-    0x000005cc   0x000005cc   0x000002c0   Code   RO          464    i._printf_core      mc_w.l(printf5.o)
+    0x000005cc   0x000005cc   0x000002c0   Code   RO          485    i._printf_core      mc_w.l(printf5.o)
     0x0000088c   0x0000088c   0x0000000e   Code   RO            5    i.fputc             retarget.o
     0x0000089a   0x0000089a   0x00000002   PAD
     0x0000089c   0x0000089c   0x00000048   Code   RO           87    i.getFrequency      uart.o
     0x000008e4   0x000008e4   0x00000080   Code   RO          207    i.main              main.o
     0x00000964   0x00000964   0x00000044   Code   RO            7    i.sendchar          retarget.o
-    0x000009a8   0x000009a8   0x00000020   Data   RO          622    Region$$Table       anon$$obj.o
+    0x000009a8   0x000009a8   0x00000020   Data   RO          643    Region$$Table       anon$$obj.o
 
 
     Execution Region ER_RW (Exec base: 0x10000000, Load base: 0x000009c8, Size: 0x00000030, Max: 0xffffffff, ABSOLUTE)
@@ -667,7 +672,7 @@ Memory Map of the image
 
     0x10000000   0x000009c8   0x0000000c   Data   RW            8    .data               retarget.o
     0x1000000c   0x000009d4   0x00000020   Data   RW           89    .data               uart.o
-    0x1000002c   0x000009f4   0x00000004   Data   RW          288    .data               system_lpc17xx.o
+    0x1000002c   0x000009f4   0x00000004   Data   RW          309    .data               system_lpc17xx.o
 
 
     Execution Region ER_ZI (Exec base: 0x10000030, Load base: 0x000009f8, Size: 0x00002080, Max: 0xffffffff, ABSOLUTE)
@@ -675,7 +680,7 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x10000030        -       0x00000080   Zero   RW           88    .bss                uart.o
-    0x100000b0        -       0x00002000   Zero   RW          273    STACK               startup_lpc17xx.o
+    0x100000b0        -       0x00002000   Zero   RW          294    STACK               startup_lpc17xx.o
 
 
 ==============================================================================

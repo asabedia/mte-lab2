@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <LPC17xx.h>
 #include <stdbool.h>
 #include "periphutils.h"
