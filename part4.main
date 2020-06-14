@@ -26,9 +26,7 @@ int main(void){
 		printf("Acontrol: %x, %x\n", LPC_ADC->ADCR, LPC_ADC->ADGDR);
 		while( LPC_ADC->ADGDR >> 31 == 0) printf("%x\n", LPC_ADC->ADGDR); // wait for conversion to complete
 		printf("%x\n", LPC_ADC->ADGDR);
-		//LPC_ADC->ADCR &= ~(1 << 24);
-		// xxxx xxxx xxxx xxxx xxxx xxxx xxxx
 		uint32_t n = ((LPC_ADC->ADGDR) >> 4) & IntToBits(12); // read bits 4..15 (12 bits)
-		printf("%d, %x\n", n, n);
+		printf("%f, %x\n", (3.3*n)/0xfff, n);
 	}
 }
