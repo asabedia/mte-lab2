@@ -1,11 +1,7 @@
 int main(void){
+	set_all_LED(0);
 	while(true){
-		LPC_GPIO2->FIODIRL = 0x0;
-		LPC_GPIO2->FIODIRL = (0x1f << 2);
-		if (((LPC_GPIO2->FIOPINL >> 10) & ((1 << 1)-1)) == 0) {
-			LPC_GPIO2->FIOSETL = (0x1f << 2);
-		} else {
-			LPC_GPIO2->FIOCLRL = (0x1f << 2);
-		}
+		bool button_pressed = (LPC_GPIO2->FIOPINL >> 10) & (0x1);
+		writeLED(7, !button_pressed);
 	}
 }
