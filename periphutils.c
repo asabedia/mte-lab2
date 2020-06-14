@@ -12,7 +12,7 @@ uint32_t IntToBits(uint8_t n){
 		case 2:
 			result = 0x3; break;
 		case 3:
-			result = 0x6; break;
+			result = 0x7; break;
 		case 0:
 			result = 0x0; break;
 	}
