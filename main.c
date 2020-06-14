@@ -3,7 +3,7 @@
 #include <LPC17xx.h>
 #include <stdbool.h>
 #include "periphutils.h"
-#define PART 1
+#define PART 4
 
 int main(void);
 
