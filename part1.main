@@ -3,5 +3,6 @@ int main(void){
 	while(true){
 		bool button_pressed = (LPC_GPIO2->FIOPINL >> 10) & (0x1);
 		writeLED(7, !button_pressed);
+		printf("\n");
 	}
 }
