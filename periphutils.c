@@ -26,26 +26,17 @@ uint32_t IntToBits(uint8_t n){
 }
 
 void writeToGPIO(LPC_GPIO_TypeDef* port, uint8_t pin, bool bit_value){
-	//port->FIOMASK = (1 << pin);
-	// n & 1 = n
-	// n | 0 = n
-	// n & 0 = 0 
-	port->FIODIR &= ~(1 << pin);
+
 	if(bit_value){
 		port->FIOPIN |= (1 << pin);
 	}else{
 		port->FIOPIN &= ~(1 << pin);
 	}
 	
-	port->FIODIR |= (1 << pin);
-	//port->FIOPIN = IntToBits(32) * bit_value;
-	//port->FIOMASK = 0x0;
-	//port->FIODIR = IntToBits(32);
 }
 
 void writeLED(uint8_t led_num, bool bit_value){
-	//LPC_GPIO1->FIODIR = 0x0;
-	//LPC_GPIO2->FIODIR = 0x0;
+	
 	switch (led_num) {
 		case 0:
 			writeToGPIO(LPC_GPIO1, 28, bit_value); break;
@@ -69,8 +60,17 @@ void writeLED(uint8_t led_num, bool bit_value){
 	//LPC_GPIO2->FIODIR = IntToBits(32);
 }
 
+void setLEDs(uint8_t* arr){
+	for(int i=0; i < 8; i++) writeLED(i, arr[i]);
+}
+
 void set_all_LED(bool bit_value){
 	for(int i =0; i < 8; i++) writeLED(i, bit_value);
+}
+
+void setupLED(void){
+	LPC_GPIO1->FIODIR = 0xB0000000;
+	LPC_GPIO2->FIODIR = IntToBits(5) << 2;
 }
 
 /*
