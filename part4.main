@@ -1,9 +1,7 @@
 int main(void){
-	printf("%x\n", LPC_SC->PCONP );
-	
+
 	// power ADC on
 	LPC_SC->PCONP |= (1 << 12);
-	printf("%x\n", LPC_SC->PCONP );
 	
 	// put P0.25 into ADC mode (connect AD0.2)
 	LPC_PINCON->PINSEL1 |= 1 << 18;
@@ -16,19 +14,14 @@ int main(void){
 	LPC_ADC->ADCR |= 1 << 10; // clock rate of 5 MHz = 25/5 = 25/(divisor + 1). bits 8-15 are divisor in binary
 	LPC_ADC->ADCR |= 1 << 21; // turn on ADC
 
-	printf("%x\n", LPC_ADC->ADCR );
-	printf("%x\n", LPC_PINCON->PINSEL1 );
 	
 	
 	while(true){
-		printf("Bcontrol: %x, %x\n", LPC_ADC->ADCR, LPC_ADC->ADGDR);
 		LPC_ADC->ADCR |= 1 << 24; // start conversion
-		printf("Acontrol: %x, %x\n", LPC_ADC->ADCR, LPC_ADC->ADGDR);
-		while( LPC_ADC->ADGDR >> 31 == 0) printf("%x\n", LPC_ADC->ADGDR); // wait for conversion to complete
-		printf("%x\n", LPC_ADC->ADGDR);
-		//LPC_ADC->ADCR &= ~(1 << 24);
-		// xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+		while( LPC_ADC->ADGDR >> 31 == 0); // wait for conversion to complete
+		
 		uint32_t n = ((LPC_ADC->ADGDR) >> 4) & IntToBits(12); // read bits 4..15 (12 bits)
-		printf("%d, %x\n", n, n);
+		
+		printf("ADC: %.2f\n", (3.3*n)/0xfff);
 	}
 }
